@@ -1,13 +1,7 @@
 defmodule Solution do
   def two_oldest_ages(ages) do
-    oldest = get_oldest(ages)
-
-    second_oldest =
-      List.delete(ages, oldest)
-      |> get_oldest()
-
-    [second_oldest, oldest]
+    ages
+    |> Enum.sort()
+    |> Enum.take(-2)
   end
-
-  defp get_oldest(ages), do: Enum.max(ages)
 end
