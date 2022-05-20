@@ -1,21 +1,9 @@
 # TwoOldestAges
 
-**TODO: Add description**
+The two oldest ages function/method needs to be completed. It should take an array of numbers as its argument and return the two highest numbers within the array. The returned value should be an array in the format [second oldest age, oldest age].
 
-## Installation
+The order of the numbers passed in could be any order. The array will always include at least 2 items. If there are two or more oldest age, then return both of them in array format.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `two_oldest_ages` to your list of dependencies in `mix.exs`:
+For example:
 
-```elixir
-def deps do
-  [
-    {:two_oldest_ages, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/two_oldest_ages](https://hexdocs.pm/two_oldest_ages).
-
+`two_oldest_ages([1, 5, 87, 45, 8, 8]) # should return [45, 87]`
