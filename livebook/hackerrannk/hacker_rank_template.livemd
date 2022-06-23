@@ -1,0 +1,61 @@
+# hacker_rank_template
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/?)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse([_n, a]), do: parse_integer_list(a)
+
+  def parse_integer_list(line) do
+    line
+    |> String.split(" ")
+    |> Enum.map(&String.to_integer/1)
+  end
+
+  def to_string(result), do: Integer.to_string(result)
+
+  def run() do
+    # do the code here
+  end
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse
+# |> Solution.run
+# |> Solution.to_string
+# |> IO.puts
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      assert Solution.run() == true
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+map = %{20 => [20, 20, 20, 20], 30 => [30, 30, 30]}
+
+Enum.reduce(map, 0, fn {_, arr}, acc ->
+  r = (Enum.count(arr) / 2) |> trunc()
+  acc + r
+end)
+```
