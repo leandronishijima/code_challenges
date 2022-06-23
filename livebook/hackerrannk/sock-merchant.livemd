@@ -1,0 +1,88 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# sock-merchant
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/sock-merchant/problem?isFullScreen=true&h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=warmup)
+
+There is a large pile of socks that must be paired by color. Given an array of integers representing the color of each sock, determine how many pairs of socks with matching colors there are.
+
+### Example
+
+There is one pair of color  and one of color . There are three odd socks left, one of each color. The number of pairs is .
+
+### Function Description
+
+Complete the sockMerchant function in the editor below.
+
+sockMerchant has the following parameter(s):
+
+int n: the number of socks in the pile
+int ar[n]: the colors of each sock
+Returns
+
+int: the number of pairs
+Input Format
+
+The first line contains an integer , the number of socks represented in .
+The second line contains  space-separated integers, , the colors of the socks in the pile.
+
+### Constraints
+
+where 
+Sample Input
+
+```
+STDIN                       Function
+-----                       --------
+9                           n = 9
+10 20 20 10 10 30 50 10 20  ar = [10, 20, 20, 10, 10, 30, 50, 10, 20]
+```
+
+Sample Output
+`3`
+
+## Code
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+defmodule HackerRank do
+  def solution(arr) do
+    arr
+    |> Enum.group_by(& &1)
+    |> Enum.reduce(0, fn {_, arr}, acc ->
+      (acc + Enum.count(arr) / 2) |> trunc()
+    end)
+  end
+end
+
+## Tests
+
+arr = [10, 20, 20, 10, 10, 30, 50, 10, 20]
+HackerRank.solution(arr) == 3
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+true
+```
+
+## Drafts
+
+```elixir
+map = %{20 => [20, 20, 20, 20], 30 => [30, 30, 30]}
+
+Enum.reduce(map, 0, fn {_, arr}, acc ->
+  r = (Enum.count(arr) / 2) |> trunc()
+  acc + r
+end)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+3
+```
