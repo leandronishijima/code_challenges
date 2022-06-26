@@ -1,0 +1,64 @@
+# list-replication
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/fp-list-replication/problem)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse_integer_list(line) do
+    Enum.map(line, &String.to_integer/1)
+  end
+
+  def run([head | tail]) do
+    for current <- tail, _y <- 1..head do
+      current
+    end
+    |> List.flatten()
+    |> Enum.map(&Integer.to_string/1)
+    |> Enum.join("\n")
+  end
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse_integer_list()
+# |> Solution.run
+# |> IO.puts
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      input = [3, 1, 2, 3]
+      assert Solution.run(input) == "1\n1\n1\n2\n2\n2\n3\n3\n3"
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+input = [3, 1, 2, 3, 4]
+
+[head | tail] = input
+
+for current <- tail, _y <- 1..head do
+  current
+end
+|> List.flatten()
+|> Enum.map(&Integer.to_string/1)
+|> Enum.join("\n")
+```
