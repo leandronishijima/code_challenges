@@ -1,0 +1,56 @@
+<!-- vim: set syntax=markdown: -->
+
+# Array Of N Elements
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/fp-array-of-n-elements/problem)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse(number) do
+    String.to_integer(number)
+  end
+
+  def run(size) do
+    for i <- 1..size, do: i
+  end
+end
+
+# IO.read(:all)
+# |> Solution.parse
+# |> Solution.run
+# |> IO.inspect(limit: :infinity)
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      solution = Solution.run(3)
+      assert length(solution) == 3
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+list =
+  for _ <- 1..3 do
+    :rand.uniform(256)
+  end
+
+length(list)
+```

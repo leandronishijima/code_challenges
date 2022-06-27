@@ -1,0 +1,55 @@
+<!-- vim: set syntax=markdown: -->
+
+# Update list
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/fp-update-list/problem)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse(line) do
+    line
+    |> Enum.map(&String.to_integer/1)
+  end
+
+  def run(input) do
+    Enum.map(input, &if(&1 < 0, do: &1 * -1, else: &1))
+  end
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse
+# |> Solution.run
+# |> Solution.to_string
+# |> IO.puts
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      assert Solution.run([2, -4, 3, -1, 23, -4, -54]) == [2, 4, 3, 1, 23, 4, 54]
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+input = [2, -4, 3, -1, 23, -4, -54]
+
+Enum.map(input, fn x -> if x < 0, do: x * -1, else: x end)
+```

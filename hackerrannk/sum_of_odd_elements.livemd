@@ -1,0 +1,60 @@
+<!-- vim: set syntax=markdown: -->
+
+# Sum of Odd Elements
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/fp-sum-of-odd-elements/problem)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse_integer_list(line) do
+    line
+    |> String.split("\n")
+    |> Enum.map(&String.to_integer/1)
+  end
+
+  def run(list) do
+    list
+    |> Enum.filter(fn x -> rem(x, 2) != 0 end)
+    |> Enum.sum()
+  end
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse
+# |> Solution.run
+# |> Solution.to_string
+# |> IO.puts
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      assert Solution.run([3, 2, 4, 6, 5, 7, 8, 0, 1]) == 16
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+input = [3, 2, 4, 6, 5, 7, 8, 0, 1]
+
+input
+|> Enum.filter(fn x -> rem(x, 2) != 0 end)
+|> Enum.sum()
+```

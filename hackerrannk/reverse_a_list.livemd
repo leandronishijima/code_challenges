@@ -1,0 +1,88 @@
+<!-- vim: set syntax=markdown: -->
+
+# Reverse a list
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/fp-reverse-a-list/problem)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse([_n, a]), do: parse_integer_list(a)
+
+  def parse_integer_list(line) do
+    line
+    |> String.split(" ")
+    |> Enum.map(&String.to_integer/1)
+  end
+
+  def run(list) do
+    list
+    |> reverse()
+    |> Enum.map(&Integer.to_string/1)
+    |> Enum.join("\n")
+  end
+
+  def reverse([head | tail]) when length(tail) != 0 do
+    reverse(tail) ++ [head]
+  end
+
+  def reverse([head | []]) do
+    [head]
+  end
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse
+# |> Solution.run
+# |> Solution.to_string
+# |> IO.puts
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      arr = [1, 2, 3, 4, 5]
+      assert Solution.run(arr) == "5\n4\n3\n2\n1"
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+arr = [1, 2, 3, 4, 5]
+
+defmodule Test do
+  def run(list) do
+    reverse(list)
+  end
+
+  def reverse([head | tail]) when length(tail) != 0 do
+    reverse(tail) ++ [head]
+  end
+
+  def reverse([head | []]) do
+    [head]
+  end
+end
+
+Test.run([1, 2, 3])
+|> Enum.map(&Integer.to_string/1)
+|> Enum.join("\n")
+```

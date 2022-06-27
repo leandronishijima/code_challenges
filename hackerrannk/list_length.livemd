@@ -1,0 +1,65 @@
+<!-- vim: set syntax=markdown: -->
+
+# List length
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/fp-list-length/problem)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse(line), do: Enum.map(line, &String.to_integer/1)
+
+  def run(list) do
+    count(list)
+  end
+
+  def count([_head | tail]), do: 1 + count(tail)
+  def count([]), do: 0
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse
+# |> Solution.run
+# |> Solution.to_string
+# |> IO.puts
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      input = [2, 5, 1, 4, 3, 7, 8, 6, 0, 9]
+
+      assert Solution.run(input) == length(input)
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+input = [2, 5, 1, 4, 3, 7, 8, 6, 0, 9]
+
+# 10
+length(input)
+
+defmodule Counter do
+  def count([_head | tail]), do: 1 + count(tail)
+  def count([]), do: 0
+end
+
+Counter.count(input)
+```
