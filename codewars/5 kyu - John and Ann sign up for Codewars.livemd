@@ -1,0 +1,215 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# John and Ann sign up for Codewars
+
+## Section
+
+[kata](https://www.codewars.com/kata/57591ef494aba64d14000526/train/elixir)
+
+### Instructions
+
+John and his wife Ann have decided to go to Codewars. On the first day Ann will do one kata and John - he wants to know how it is working - 0 kata.
+
+Let us call a(n) - and j(n) - the number of katas done by Ann - and John - at day n. We have a(0) = 1 and in the same manner j(0) = 0.
+
+They have chosen the following rules:
+
+On day n the number of katas done by Ann should be n minus the number of katas done by John at day t, t being equal to the number of katas done by Ann herself at day n - 1
+
+On day n the number of katas done by John should be n minus the number of katas done by Ann at day t, t being equal to the number of katas done by John himself at day n - 1
+
+Whoops! I think they need to lay out a little clearer exactly what there're getting themselves into!
+
+john(11)  -->  [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6] </br>
+ann(6)    -->  [1, 1, 2, 2, 3, 3] </br>
+
+sum_john(75)  -->  1720 </br>
+sum_ann(150)  -->  6930
+
+## draft
+
+n = 11 </br>
+john(n) = [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6]
+
+0..11
+
+```elixir
+# Johnann.john(11)
+# Johnann.ann(6)
+
+n = 42145
+
+n
+|> Integer.digits()
+|> Enum.sort(&(&1 >= &2))
+|> Enum.join()
+|> String.to_integer()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+54421
+```
+
+## code
+
+```elixir
+defmodule Johnann do
+  def john(0), do: [0]
+  def john(1), do: [0, 0]
+  def john(2), do: [0, 0, 1]
+
+  def john(n) when n > 1 do
+    0..(n - 1)
+    |> Enum.map(fn
+      0 ->
+        john(0)
+
+      1 ->
+        john(0)
+
+      n2 ->
+        katas = ann(n2 - 1)
+        n2 - List.last(katas)
+    end)
+    |> List.flatten()
+  end
+
+  def ann(0), do: [1]
+  def ann(1), do: [1, 1]
+
+  def ann(n) when n > 1 do
+    0..(n - 1)
+    |> Enum.map(fn
+      0 ->
+        sum_ann(0)
+
+      n2 ->
+        katas = john(n2 - 1)
+        n2 - List.last(katas)
+    end)
+    |> List.flatten()
+  end
+
+  def sum_john(n) do
+    Enum.sum(john(n))
+  end
+
+  def sum_ann(n) do
+    Enum.sum(ann(n))
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Johnann, <<70, 79, 82, 49, 0, 0, 11, ...>>, {:sum_ann, 1}}
+```
+
+## tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule JohnannTest do
+  use ExUnit.Case, async: false
+
+  describe "john/1" do
+    test "test 1" do
+      assert Johnann.john(0) == [0]
+      assert Johnann.john(1) == [0, 0]
+      assert Johnann.john(2) == [0, 0, 1]
+      assert Johnann.john(7) == [0, 0, 1, 2, 2, 3, 4]
+      assert Johnann.john(11) == [0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6]
+    end
+  end
+
+  describe "john and ann" do
+    test "ann case" do
+      # On day n the number of katas done by Ann should be 
+      # n minus the number of katas done by John at day t, 
+      # t being equal to the number of katas 
+      # done by Ann herself at day n - 1
+      n = 6
+      assert Johnann.ann(n) == [1, 1, 2, 2, 3, 3]
+      assert Johnann.sum_ann(n) == 12
+    end
+  end
+
+  describe "sun_john/1" do
+    test "test 1" do
+      assert Johnann.sum_john(1) == 0
+    end
+  end
+
+  describe "ann/1" do
+    test "test 1" do
+      assert Johnann.ann(0) == [1]
+      assert Johnann.ann(1) == [1, 1]
+      assert Johnann.ann(6) == [1, 1, 2, 2, 3, 3]
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+
+
+  1) test john/1 test 1 (JohnannTest)
+     codewars/5 kyu - John and Ann sign up for Codewars.livemd#cell:7
+     Assertion with == failed
+     code:  assert Johnann.john(7) == [0, 0, 1, 2, 2, 3, 4]
+     left:  [0, 0, 1, 2, 2, 3, 3]
+     right: [0, 0, 1, 2, 2, 3, 4]
+     stacktrace:
+       codewars/5 kyu - John and Ann sign up for Codewars.livemd#cell:11: (test)
+
+...
+
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+4 tests, 1 failure
+
+Randomized with seed 351823
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 1, skipped: 0, total: 4}
+```
+
+## Solution
+
+```elixir
+defmodule JohnannSolution do
+  def john(n), do: elem(_acc(n), 1) |> Map.values()
+  def ann(n), do: elem(_acc(n), 2) |> Map.values()
+
+  def sum_john(n), do: john(n) |> Enum.sum()
+  def sum_ann(n), do: ann(n) |> Enum.sum()
+
+  defp _acc(0), do: {0, %{0 => 0}, %{0 => 1}}
+
+  defp _acc(n) do
+    {1, %{0 => 0, 1 => 0}, %{0 => 1, 1 => 1}}
+    |> Stream.iterate(fn {i, john, ann} ->
+      j = i - ann[john[i - 1]]
+      a = i - john[ann[i - 1]]
+      {i + 1, Map.put(john, i, j), Map.put(ann, i, a)}
+    end)
+    |> Enum.at(n - 1)
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, JohnannSolution, <<70, 79, 82, 49, 0, 0, 11, ...>>, {:_acc, 1}}
+```
