@@ -1,0 +1,61 @@
+<!-- vim: set syntax=markdown: -->
+
+# String Reductions
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/string-reductions/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse(a), do: run(a)
+
+  def run(input),
+    do: remove_repeat_char("", String.codepoints(input))
+
+  defp remove_repeat_char(acc, []), do: acc
+
+  defp remove_repeat_char(acc, [head | tail]) do
+    if String.contains?(acc, head),
+      do: remove_repeat_char(acc, tail),
+      else: remove_repeat_char(acc <> head, tail)
+  end
+end
+
+# IO.read(:all)
+# |> Solution.parse
+# |> Solution.run
+# |> IO.put
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "test 1" do
+      assert Solution.run("accabb") == "acb"
+    end
+
+    test "test 2" do
+      assert Solution.run("pprrqq") == "prq"
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+## Drafts
+
+```elixir
+input = "accabb"
+
+input <> "d"
+```
