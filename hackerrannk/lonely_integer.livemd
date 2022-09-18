@@ -1,0 +1,110 @@
+<!-- vim: set syntax=markdown: -->
+
+<!-- livebook:{"persist_outputs":true} -->
+
+# lonely_integer
+
+## Problem
+
+[link](https://www.hackerrank.com/challenges/lonely-integer/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=7-day-campaign)
+
+## Code
+
+```elixir
+defmodule Solution do
+  def parse([_n, a]), do: parse_integer_list(a)
+
+  def parse_integer_list(line) do
+    line
+    |> String.split(" ")
+    |> Enum.map(&String.to_integer/1)
+  end
+
+  def to_string(result), do: Integer.to_string(result)
+
+  def run(integer_list) do
+    integer_list
+    |> Enum.filter(fn x -> Enum.count(integer_list, &(&1 == x)) == 1 end)
+    |> Enum.at(0)
+  end
+end
+
+# IO.read(:all)
+# |> String.split("\n", trim: true)
+# |> Solution.parse
+# |> Solution.run
+# |> Solution.to_string
+# |> IO.puts
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Solution, <<70, 79, 82, 49, 0, 0, 10, ...>>, {:run, 1}}
+```
+
+## Tests
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule SolutionTest do
+  use ExUnit.Case, async: false
+
+  describe "solution/1" do
+    test "Sample input 1" do
+      assert Solution.run([1, 1, 2]) == 2
+    end
+
+    test "Sample input 2" do
+      assert Solution.run([0, 0, 1, 2, 1]) == 2
+    end
+  end
+end
+
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+..
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+2 tests, 0 failures
+
+Randomized with seed 574275
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 0, skipped: 0, total: 2}
+```
+
+## Drafts
+
+```elixir
+map = [0, 0, 1, 2, 1]
+
+map
+|> Enum.filter(fn x -> Enum.count(map, &(&1 == x)) == 1 end)
+|> Enum.at(0)
+|> dbg()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[lonely_integer.livemd#cell:6: (file)]
+map #=> [0, 0, 1, 2, 1]
+|> Enum.filter(fn x -> Enum.count(map, &(&1 == x)) == 1 end) #=> [2]
+|> Enum.at(0) #=> 2
+
+
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+2
+```
